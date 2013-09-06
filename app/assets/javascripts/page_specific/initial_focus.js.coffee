@@ -1,0 +1,2 @@
+$ ->
+	$('#frontTextInput').focus()

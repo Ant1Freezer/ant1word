@@ -1,0 +1,14 @@
+- @page_title = "О сайте коротко"
+= render "about_header"
+%ol
+  %li #{link_to "Читайте интересные тексты", about_path(anchor: "whatToRead")} и&nbsp;подчёркивайте слова, в переводе которых не уверены.
+  %li Вооружитесь #{link_to "словарём", about_path(anchor: "dictionary")}&nbsp;&mdash; и&nbsp;создавайте карточки. Регулярно. #{link_to "Каждый день", about_path(anchor: "everyDay")}.
+  %li И&nbsp;повторяйте. Тоже #{link_to "каждый день", about_path(anchor: "everyDay")}.
+  %li Никаких тестов. Видите слово&nbsp;&mdash; просто отвечайте &laquo;Помню&raquo; или &laquo;Не&nbsp;помню&raquo;. #{link_to "Вы&nbsp;сами контролируете свои знания".html_safe, about_path(anchor: "selfControl")}.
+  %li Можно подсматривать. На&nbsp;результате это не&nbsp;скажется. Всё равно выучите.
+  %li Чтобы слово запомнилось, достаточно повторить его несколько раз через #{link_to "увеличивающиеся промежутки времени", about_path(anchor: "leitner")}. Например, через день, через три дня и&nbsp;через десять.
+  %li Три раза подряд отвечаете, что помните слово&nbsp;&mdash; и&nbsp;оно считается выученным. Это не&nbsp;сразу, а&nbsp;#{link_to "на&nbsp;протяжении месяца".html_safe, about_path(anchor: "leitner")} :).
+  %li Чтобы лучше запоминалось, записывайте слово вместе с&nbsp;контекстом.
+  %li Один раз в&nbsp;день повторили старые слова&nbsp;&mdash; и&nbsp;до&nbsp;следующего дня об&nbsp;этом можно забыть. #{link_to "Всё равно всё запомните", about_path(anchor: "leitner")}.
+  %li Через месяц увидите, как вырос ваш словарный запас. Достаточно каждый день вписывать на&nbsp;карточки #{link_to "несколько новых слов", about_path(anchor: "howMany")}. Остальное&nbsp;&mdash; дело техники.
+%h4 И&nbsp;всё это&nbsp;&mdash; совершенно бесплатно.

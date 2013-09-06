@@ -1,0 +1,13 @@
+<!-- TODO: refactor flash after writing tests -->
+
+- flash.each do |key, value|
+  - if value.class == Array and value.size > 1
+    %div{ class: "alert alert-#{key}" }
+      - value.each do |li|
+        %li= li
+  - elsif value.class == Array and value.size == 1
+    %div{ class: "alert alert-#{key}" }
+      = value[0]
+  - else
+    %div{ class: "alert alert-#{key}" }
+      = value

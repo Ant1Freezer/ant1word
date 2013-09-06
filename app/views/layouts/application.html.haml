@@ -1,0 +1,22 @@
+!!! 5
+%html.no-js
+  %head
+    %title= full_title(@page_title)
+    %meta{ name: "Viewport", content: "width=device-width, initial-scale=1.0" }
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .container
+      = render "layouts/menu"
+      = render "layouts/alerts"
+      = yield
+      .push
+    %footer.footer
+      .container
+        %p.copyright
+          2013, 
+          = link_to "TestApp", "http://TestApp.COM"
+        %p.email= mail_to "test@test.test"
+    - if Rails.env.development? or Rails.env.test?
+      = debug(params)

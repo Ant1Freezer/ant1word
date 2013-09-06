@@ -1,0 +1,18 @@
+- @page_title = "Статистика"
+%h2= @page_title
+.row
+  .span4
+    %h3 Общая
+    %table.table
+      - total_stats(@total_stats).each do |row|
+        = render "stats_element", name: row[:name], value: row[:value]
+  .span4
+    %h3 За месяц
+    %table.table
+      - stats_for_period(@stats_for_last_month).each do |row|
+        = render "stats_element", name: row[:name], value: row[:value]
+  .span4
+    %h3 Сегодня
+    %table.table
+      - stats_for_period(@stats_for_today).each do |row|
+        = render "stats_element", name: row[:name], value: row[:value]

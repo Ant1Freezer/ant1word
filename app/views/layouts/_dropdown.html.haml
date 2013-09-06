@@ -1,0 +1,8 @@
+%li{ class: active_class(stats_path) }
+  = link_to "Статистика",  stats_path
+%li.divider
+%li{ class: active_class(settings_path) }
+  = link_to "Настройки", settings_path
+%li.divider
+%li
+  = link_to "Выйти", logout_path

@@ -1,0 +1,20 @@
+- @page_title = "Регистрация"
+%h2= @page_title
+= form_for @user do |f|
+  = f.label :email do
+    Email:
+    %span.text-error *
+  = f.email_field :email, required: true
+  %span.help-block Мы ни с кем не будем делиться вашим адресом.
+
+  = f.label :password do
+    Пароль:
+    %span.text-error *
+  = f.password_field :password, required: true
+  %span.help-block Любая комбинация цифр (0-9) и латинских букв (a-z, A-Z) без пробелов, не короче 6 символов. РеГисТР имеет значение.
+
+  = f.label :name, "Имя:"
+  = f.text_field :name
+  %span.help-block Можете указать, как к вам обращаться (не длиннее 25 символов).
+
+  = f.submit "Зарегистрироваться", class: "btn btn-primary"

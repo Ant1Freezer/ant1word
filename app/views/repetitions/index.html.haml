@@ -1,0 +1,15 @@
+- @page_title = "Повтор слов"
+- if @current_repetition
+  = link_to @current_text, repetitions_path(repetition_id: @current_repetition.id, view: @reverse_view), class: "hero-unit flashcard flashcard-repeat"
+  = link_to @reverse_text, repetitions_path(repetition_id: @current_repetition.id, ivew: @current_view), class: "hero-unit flashcard flashcard-hidden"
+  .wrapper
+    = form_for @current_repetition, html: { class: "form-actions form-left" } do |f|
+      = f.hidden_field :id
+      = hidden_field_tag :successful, false
+      = submit_tag "Не помню", class: "btn btn-link"
+    = form_for @current_repetition, html: { class: "form-actions pull-right" } do |f|
+      = f.hidden_field :id
+      = hidden_field_tag :successful, true
+      = submit_tag "Помню", class: "btn btn-link pull-right"
+  .progress
+    .bar{ style: "width: #{current_user.repetitions.progress_today * 100}%" }

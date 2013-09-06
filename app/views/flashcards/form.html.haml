@@ -1,0 +1,27 @@
+= form_for @flashcard, html: { id: "flashcardInputForm" } do |f|
+  .row
+    .span12
+      = f.label :front_text, "Слово:"
+      = f.text_area :front_text,
+                    class: "input-block-level",
+                    rows: 6,
+                    id: "frontTextInput",
+                    required: true
+    .span12
+      = f.label :back_text, "Значение:"
+      = f.text_area :back_text,
+                    class: "input-block-level",
+                    rows: 6,
+                    id: "backTextInput",
+                    required: true
+  - if request.fullpath == new_flashcard_path
+    = submit_tag "Создать", class: "btn btn-block"
+  - else
+    = submit_tag "Сохранить", class: "btn span10"
+    
+- unless request.fullpath == new_flashcard_path
+  .destroy-link-div.span2.pull-right
+    = button_to "Удалить",
+                @flashcard,
+                method: :delete,
+                class: "btn btn-link destroy-link"

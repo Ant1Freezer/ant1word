@@ -1,0 +1,33 @@
+%a.btn.btn-navbar.fat-menu-center.no-js-hide{ data: { toggle: "collapse", target: ".nav-collapse" } }
+  %span.icon-bar
+  %span.icon-bar
+  %span.icon-bar
+%ul.nav.pull-left#elementBeforeDropdown
+  %li{ class: active_class(new_flashcard_path) }
+    = link_to new_flashcard_path, class: create_class do
+      %span Создать
+      %span
+        %small= "#{current_user.flashcards.created_on(current_date).size} из #{current_user.daily_limit}"
+  %li{ class: "#{active_class(repetitions_path)}" }
+    = link_to repetitions_path, class: repeat_class do
+      %span Повторить
+      %span
+        %small= "#{current_user.repetitions.run.on(current_date).size} из #{current_user.repetitions.for(current_date).size}"
+
+-# Этот ul Яваскриптом обрамляется в div, чтобы в случае, если Яваскрипт не работает, меню работало, хоть и выглядело бы некрасиво.
+
+-# Класс fat-menu-center - чтобы пункты меню в "толстом" меню не были приклеены к верху, а появлялись посередине.
+%ul.fat-menu-center.nav.pull-right#dropdownMenu
+  %li{ class: active_class(flashcards_path) }
+    = link_to "Все карточки", flashcards_path
+  = render "layouts/about"
+  -# Дропдаун подсвечивается как активный, когда выбран один из пунктов меню, входящих в него.
+  %li.dropdown.no-js-hide#user-dropdown-menu
+    %a.dropdown-toggle{ href: "#", data: { toggle: "dropdown" } }
+      = current_user.name.blank? ? current_user.email : current_user.name
+      %b.caret
+    %ul.dropdown-menu
+      = render "layouts/dropdown"
+  %li#user-menu-no-dropdown
+    %ul.nav
+      =render "layouts/dropdown"

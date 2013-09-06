@@ -1,0 +1,13 @@
+- @page_title = "Все карточки"
+= render "deleted_today"
+- @flashcards_grouped_by_date.keys.sort.reverse.each do |date|
+  %p.lead #{date}:
+  - @flashcards_grouped_by_date[date].reverse.each do |flashcard|
+    %a{ id: flashcard.id }
+    = link_to edit_flashcard_path(flashcard),
+              class: ["hero-unit",
+                      "flashcard",
+                      flashcard.learned? && "flashcard-learned"] do
+      %span<>= flashcard.front_text
+      %hr
+      %span<>= flashcard.back_text
