@@ -4,7 +4,7 @@ load 'deploy/assets'
 set :application, 'ant1word'
 set :applicationdir, '/home/rails/projects/ant1word'
 set :repository, 'https://github.com/Ant1Freezer/ant1word'
-set :domain, 'dev.hostingconsult.ru'
+set :domain, '77.81.244.208'
 ENV['RUBYPATH'] = '/opt/ruby-2.0.0-p247/bin/'
 
 set :default_environment, {
