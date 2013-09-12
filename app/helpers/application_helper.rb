@@ -3,7 +3,7 @@
 module ApplicationHelper
 
   def full_title(title = nil)
-    base_title = "Ant1Word"
+    base_title = "LearnHub"
     if title.nil? or title.blank?
       base_title
     else
