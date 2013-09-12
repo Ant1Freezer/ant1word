@@ -1,25 +1,47 @@
-# config/unicorn.rb
-worker_processes 3
+ENV['RAILS_ENV'] = 'production'
+ENV['RUBYPATH'] = '/opt/ruby-2.0.0-p247/bin/'
+deploy_to  = '/home/rails/projects/ant1word'
+rails_root = "#{deploy_to}/current"
+pid_file   = "#{deploy_to}/shared/pids/unicorn.pid"
+socket_file= "#{deploy_to}/shared/unicorn.sock"
+log_file   = '/var/log/rails/ant1word/unicorn.log'
+err_log   = log_file
+old_pid    = pid_file + '.oldbin'
+
 timeout 30
-preload_app true
+worker_processes 4 # Здесь тоже в зависимости от нагрузки, погодных условий и текущей фазы луны
+listen socket_file, :backlog => 1024
+pid pid_file
+stderr_path err_log
+stdout_path log_file
+
+preload_app true # Мастер процесс загружает приложение, перед тем, как плодить рабочие процессы.
+
+GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
+
+before_exec do |server|
+  ENV['BUNDLE_GEMFILE'] = "#{rails_root}/Gemfile"
+end
 
 before_fork do |server, worker|
-
-  Signal.trap 'TERM' do
-    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
-    Process.kill 'QUIT', Process.pid
-  end
-
+  # Перед тем, как создать первый рабочий процесс, мастер отсоединяется от базы.
   defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
+  ActiveRecord::Base.connection.disconnect!
+
+  # Ниже идет магия, связанная с 0 downtime deploy.
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill('QUIT', File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      # someone else did our job for us
+    end
+  end
 end
 
 after_fork do |server, worker|
-
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
-  end
-
+  # reset rails cache to not share memcached
+  Rails.cache.reset if Rails.cache.respond_to? :reset
+  # После того как рабочий процесс создан, он устанавливает соединение с базой.
   defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection
 end
